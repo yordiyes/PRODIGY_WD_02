@@ -9,10 +9,12 @@ const lapbtn = document.getElementById('lap');
 let startTime;
 let updateTime;
 let difference;
+let pausedTime = 0;
 let paragraphElement
 let hours;
 let minutes;
 let seconds;
+let miliSecond;
 let timeInterval;
 let isRunning = false;
 let reset = false;
@@ -20,26 +22,27 @@ let count = 0;
 
 startBtn.addEventListener('click', ()=>{
     if(!isRunning){
-        startTime = new Date().getTime();
+        startTime = new Date().getTime() - pausedTime;
         timeInterval = setInterval(getShowTime, 1);
-        startBtn.innerHTML = "Stop";
+        startBtn.innerHTML = "<i class='bx bx-pause'></i>";
         isRunning = true;
         reset = false;
     }else{
         clearInterval(timeInterval);
-        startBtn.innerHTML = 'Start';
+        pausedTime = new Date().getTime() - startTime;
+        startBtn.innerHTML = "<i class='bx bx-play'></i>";
         isRunning = false;  
     }
 })
 
 lapbtn.addEventListener('click', ()=>{
-    if(hours===0 && minutes===0 && seconds===0){
+    if(hours===0 && minutes===0 && seconds===0 && miliSecond === 0){
         if(paragraphElement)
             paragraphElement.display ="none";
     }else{
         paragraphElement = document.createElement('p');
         paragraphElement.classList.add("style")
-        paragraphElement.innerHTML =  hours + ':' + minutes + ':' + seconds;
+        paragraphElement.innerHTML =  hours + ':' + minutes + ':' + seconds + ":" + miliSecond;
         if(count < 7){
             secondDiv.appendChild(paragraphElement);
             count += 1;
@@ -55,12 +58,14 @@ lapbtn.addEventListener('click', ()=>{
 
 resetBtn.addEventListener('click', ()=>{
     clearInterval(timeInterval);
-    display.innerHTML = "00:00:00";
+    display.innerHTML = "0:00:00:00";
     hours = 0;
     minutes = 0;
     seconds = 0;
+    miliSecond = 0;
+    pausedTime = 0;
     isRunning = false;
-    startBtn.innerHTML ='Start';
+    startBtn.innerHTML ="<i class='bx bx-play'></i>";;
     while(secondDiv.firstChild){
         secondDiv.removeChild(secondDiv.firstChild);
     }
@@ -77,10 +82,12 @@ function getShowTime(){
     hours = Math.floor((difference % (1000*60*60*24)) / (1000*60*60));
     minutes = Math.floor((difference % (1000*60*60)) / (1000*60));
     seconds = Math.floor((difference % (1000*60)) / (1000));
+    miliSecond = Math.floor((difference % 10000 / 100))
 
     hours = (hours < 10) ? '0' + hours:hours;
     minutes = (minutes < 10) ? '0' + minutes:minutes;
     seconds = (seconds < 10) ? '0' + seconds:seconds;
+    // miliSecond = (miliSecond < 10) ? '0' + miliSecond:miliSecond;
 
-    display.innerHTML = hours + ':' + minutes + ':' + seconds;
+    display.innerHTML = hours + ':' + minutes + ':' + seconds + ":" + miliSecond ;
 }
