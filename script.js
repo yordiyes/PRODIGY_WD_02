@@ -42,7 +42,7 @@ lapbtn.addEventListener('click', ()=>{
     }else{
         paragraphElement = document.createElement('p');
         paragraphElement.classList.add("style")
-        paragraphElement.innerHTML =  hours + ':' + minutes + ':' + seconds + ":" + miliSecond;
+        paragraphElement.innerHTML = (count + 1) + ", "+ hours + ':' + minutes + ':' + seconds + "." + miliSecond;
         if(count < 7){
             secondDiv.appendChild(paragraphElement);
             count += 1;
@@ -58,7 +58,7 @@ lapbtn.addEventListener('click', ()=>{
 
 resetBtn.addEventListener('click', ()=>{
     clearInterval(timeInterval);
-    display.innerHTML = "0:00:00:00";
+    display.innerHTML = "00:00:00.00";
     hours = 0;
     minutes = 0;
     seconds = 0;
@@ -89,5 +89,5 @@ function getShowTime(){
     seconds = (seconds < 10) ? '0' + seconds:seconds;
     // miliSecond = (miliSecond < 10) ? '0' + miliSecond:miliSecond;
 
-    display.innerHTML = hours + ':' + minutes + ':' + seconds + ":" + miliSecond ;
+    display.innerHTML = hours + ':' + minutes + ':' + seconds + "." + miliSecond ;
 }
