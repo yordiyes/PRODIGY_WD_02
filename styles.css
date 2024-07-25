@@ -32,12 +32,12 @@ body{
     padding-top: 0;
 }
 button{
-    border-radius: 10px;
+    border-radius: 60px;
     border: none;
     background: #ddd3d3;
     width: 100px;
     padding: 5px;
-    margin-right: 10px;
+    margin-right: 30px;
     font-weight: 700;
 }
 button:hover{
