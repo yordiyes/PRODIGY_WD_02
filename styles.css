@@ -6,7 +6,7 @@
 body{
     height: 611px;
     font-family: "Ubuntu", sans-serif;
-    background: url("clock.jpg");
+    background: url("images/clock.jpg");
     background-size: cover;
     background-color: #1d2533;
 }
@@ -32,7 +32,7 @@ body{
     padding-top: 0;
 }
 button{
-    border-radius: 60px;
+    border-radius: 61px;
     border: none;
     background: #ddd3d3;
     width: 100px;
