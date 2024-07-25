@@ -27,8 +27,10 @@ startBtn.addEventListener('click', ()=>{
         startBtn.innerHTML = "<i class='bx bx-pause'></i>";
         isRunning = true;
         reset = false;
-    }else{
+        lapbtn.disabled = false;
+     }else{
         clearInterval(timeInterval);
+        lapbtn.disabled = true;
         pausedTime = new Date().getTime() - startTime;
         startBtn.innerHTML = "<i class='bx bx-play'></i>";
         isRunning = false;  
@@ -36,23 +38,19 @@ startBtn.addEventListener('click', ()=>{
 })
 
 lapbtn.addEventListener('click', ()=>{
-    if(hours===0 && minutes===0 && seconds===0 && miliSecond === 0){
-        if(paragraphElement)
-            paragraphElement.display ="none";
+    if(!isRunning) return
+    paragraphElement = document.createElement('p');
+    paragraphElement.classList.add("style")
+    paragraphElement.innerHTML = (count + 1) + ", "+ hours + ':' + minutes + ':' + seconds + "." + miliSecond;
+    if(count < 7){
+        secondDiv.appendChild(paragraphElement);
+        count += 1;
+        console.log(count)  
+    }else if(count < 14){
+        thirdDiv.appendChild(paragraphElement);
+        count += 1;
     }else{
-        paragraphElement = document.createElement('p');
-        paragraphElement.classList.add("style")
-        paragraphElement.innerHTML = (count + 1) + ", "+ hours + ':' + minutes + ':' + seconds + "." + miliSecond;
-        if(count < 7){
-            secondDiv.appendChild(paragraphElement);
-            count += 1;
-            console.log(count)  
-        }else if(count < 14){
-            thirdDiv.appendChild(paragraphElement);
-            count += 1;
-        }else{
-           window.alert("No More Lap!")
-        }
+        window.alert("No More Lap!")
     }
 })
 
@@ -65,7 +63,8 @@ resetBtn.addEventListener('click', ()=>{
     miliSecond = 0;
     pausedTime = 0;
     isRunning = false;
-    startBtn.innerHTML ="<i class='bx bx-play'></i>";;
+    startBtn.innerHTML ="<i class='bx bx-play'></i>";
+    lapbtn.disabled = true;
     while(secondDiv.firstChild){
         secondDiv.removeChild(secondDiv.firstChild);
     }
